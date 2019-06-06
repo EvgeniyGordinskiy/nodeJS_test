@@ -147,13 +147,13 @@ app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userControl
 /**
  * User's routes.
  */
-app.get('/users', userController.getUsers);
+app.get('/users', passportConfig.isAuthenticated, userController.getUsers);
 
 /**
  * Post's routes.
  */
-app.get('/user/:userId/post', postController.index);
-app.post('/user/:userId/post', postController.create);
+app.get('/user/:userId/post', passportConfig.isAuthenticated, postController.index);
+app.post('/user/:userId/post', passportConfig.isAuthenticated, postController.create);
 
 /**
  * OAuth authentication routes. (Sign in)
