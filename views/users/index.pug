@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h3 List of users
+
+  .row
+    each user in users
+      .col-md-4
+        a(href='/user/'+user._id+'/post', style='color: #fff')
+          .card(style='background-color: #575a56').mb-3
+            .card-body
+              p #{user.email}
+              |  #{user.profile.name}

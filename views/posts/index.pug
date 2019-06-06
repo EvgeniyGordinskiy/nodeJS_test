@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+    .pb-2.mt-2.mb-4.border-bottom
+     h3 List user's posts
+         .row.float-right
+            .mb-8
+                button.btn.btn-outline-success(data-toggle='modal' data-target='#myModal')
+                    i.fas.fa-plus-circle.fa-sm
+                    | Add Post
+    .row
+        each post in posts
+            .col-md-4
+                a(href='#', style='color: #fff')
+                    .card(style='background-color: #575a56').mb-3
+                        .card-body
+                            p #{post.name}
+                            |  #{post.description}
+
+    #myModal.modal.fade(role='dialog', aria-hidden="true")
+        .modal-dialog.modal-sm
+            .modal-content
+                .modal-header.text-center
+                    h4.modal-title Create Post
+                    button.close(type='button', data-dismiss='modal') &times;
+                form(method='POST' action='/user/' + userId + '/post/')
+                    input(type="hidden", name="_csrf", value=_csrf)
+                    input(type="hidden", name="userId", value=userId)
+                    .modal-body.mx-3
+                        .md-form.mb-5
+                            label.pull-left.col-sm-2.col-sm-offset-1.control-label(for="title", data-error="wrong") Title
+                            input.normal-font-weight.pull-left.form-control.validate(id="title", minlength="3",name="title",required="true")
+                        .md-form.mb-5
+                            label.pull-left.col-sm-2.col-sm-offset-1.control-label(for="description") Description
+                            input.normal-font-weight.pull-left.form-control.validate(id="description", minlength="3",name="description",required="true")
+                    .modal-footer
+                        button.btn.btn-default Save
+                        button.btn.btn-default(data-dismiss='modal') Close
+

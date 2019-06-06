@@ -1,0 +1,33 @@
+.navbar.navbar-light.fixed-top.navbar-expand-lg
+  .container
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+      span.sr-only Toggle navigation
+      span.navbar-toggler-icon
+    .collapse.navbar-collapse
+      ul.nav.navbar-nav
+        if user
+          li.nav-item(class=(title === 'Users') ? 'active' : undefined)
+            a.nav-link(href='/users') Users
+        li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
+          a.nav-link(href='/contact') Contact
+        li.nav-item(class=(title === 'Status') ? 'active' : undefined)
+          a.nav-link(href='/status') Status
+      ul.nav.navbar-nav.ml-auto
+        if !user
+          li.nav-item(class=(title === 'Login') ? 'active' : undefined)
+            a.nav-link(href='/login') Login
+          li.nav-item(class=(title === 'Create User') ? 'active' : undefined)
+            a.nav-link(href='/signup') Create User
+        else
+          li.dropdown(class=(title === 'User Management') ? 'active' : undefined).nav-item
+            a.dropdown-toggle.nav-link(href='#', data-toggle='dropdown')
+              if user.profile.picture
+                img(src=user.profile.picture)
+              span= user.profile.name || user.email || user.id
+              i.caret
+            ul.dropdown-menu
+              li.dropdown-item
+                a(href='/account') My User
+              li.divider.dropdown-item
+              li.dropdown-item
+                a(href='/logout') Logout
