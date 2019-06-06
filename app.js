@@ -16,6 +16,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const expressValidator = require('express-validator');
+const check = require('express-validator/check').check;
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
@@ -153,7 +154,10 @@ app.get('/users', passportConfig.isAuthenticated, userController.getUsers);
  * Post's routes.
  */
 app.get('/user/:userId/post', passportConfig.isAuthenticated, postController.index);
-app.post('/user/:userId/post', passportConfig.isAuthenticated, postController.create);
+app.post('/user/:userId/post',[
+    check('title').isLength({ min: 3 }).trim().escape(),
+    check('description').isLength({ min: 3 }).trim().escape(),
+], passportConfig.isAuthenticated, postController.create);
 
 /**
  * OAuth authentication routes. (Sign in)
